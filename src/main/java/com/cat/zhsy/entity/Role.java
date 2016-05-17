@@ -1,6 +1,6 @@
 package com.cat.zhsy.entity;
 
-public class User {
+public class Role {
 
 	private int id;
 
@@ -20,11 +20,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + "]";
 	}
 
 }

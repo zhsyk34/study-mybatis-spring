@@ -1,7 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cat.zhsy.dao.UserDao">
-	<select id="find" parameterType="int" resultType="User">
-		SELECT * FROM user WHERE id = #{id}
+
+	<sql id="table">user</sql>
+
+	<sql id="columns">id, name</sql>
+
+	<insert id="save">
+		insert into
+		<include refid="table" />
+		(
+		<include refid="columns" />
+		)
+		values (null, #{name})
+	</insert>
+
+	<insert id="saves">
+		insert into
+		<include refid="table" />
+		(
+		<include refid="columns" />
+		)
+		values
+		<foreach collection="list" item="user" separator=",">
+			(null, #{user.name})
+		</foreach>
+	</insert>
+
+	<delete id="deleteById">
+		delete from
+		<include refid="table" />
+		where id = #{id}
+	</delete>
+
+	<delete id="deleteByIds">
+		delete from
+		<include refid="table" />
+		where id in
+		<foreach collection="array" item="id" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+	<update id="update">
+		update
+		<include refid="table" />
+		set
+		name = #{name}
+		where id = #{id}
+	</update>
+
+	<select id="findById" resultType="User">
+		SELECT * FROM
+		<include refid="table" />
+		WHERE id = #{id}
 	</select>
+
+	<select id="findAll" resultType="User">
+		SELECT * FROM user
+	</select>
+
+	<select id="findInterval" resultType="User">
+		SELECT * FROM user limit #{0}, #{1}
+	</select>
+
 </mapper>
