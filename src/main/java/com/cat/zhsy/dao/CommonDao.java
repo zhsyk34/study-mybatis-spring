@@ -1,6 +1,7 @@
 package com.cat.zhsy.dao;
 
 import java.util.Collection;
+import java.util.Map;
 
 public interface CommonDao<Entity> {
 
@@ -8,7 +9,11 @@ public interface CommonDao<Entity> {
 
 	int deleteById(int id);
 
+	int deleteByEntity(Entity entity);
+
 	int deleteByIds(int[] ids);
+
+	int deleteByEntitys(Collection<Entity> entities);
 
 	int update(Entity entity);
 
@@ -17,5 +22,7 @@ public interface CommonDao<Entity> {
 	Collection<Entity> findAll();
 
 	Collection<Entity> findInterval(int offset, int limit);
+
+	int count(Map<String, Object> map);
 
 }

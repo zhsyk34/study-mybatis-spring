@@ -6,6 +6,8 @@ public class User {
 
 	private String name;
 
+	private int age;
+
 	public int getId() {
 		return id;
 	}
@@ -22,9 +24,17 @@ public class User {
 		this.name = name;
 	}
 
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + "]";
+		return "User [id=" + id + ", name=" + name + ", age=" + age + "]";
 	}
 
 }

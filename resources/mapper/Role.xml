@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cat.zhsy.dao.UserDao">
+<mapper namespace="com.cat.zhsy.dao.RoleDao">
 
 	<!--table name -->
-	<sql id="entity">user</sql>
+	<sql id="entity">role</sql>
 	<!--primary key -->
 	<sql id="id">id</sql>
 	<!--all columns -->
-	<sql id="column">id, name, age</sql>
+	<sql id="column">id, name</sql>
 
 	<insert id="save">
 		INSERT INTO
@@ -16,7 +16,7 @@
 		<include refid="column" />
 		)
 		VALUES
-		(NULL, #{name}, #{age})
+		(NULL, #{name})
 	</insert>
 
 	<insert id="saves">
@@ -26,8 +26,8 @@
 		<include refid="column" />
 		)
 		VALUES
-		<foreach collection="list" item="user" separator=",">
-			(NULL, #{user.name}, #{user.age})
+		<foreach collection="list" item="entity" separator=",">
+			(NULL, #{entity.name})
 		</foreach>
 	</insert>
 
@@ -52,7 +52,7 @@
 		UPDATE
 		<include refid="entity" />
 		SET
-		name = #{name}, age = #{age}
+		name = #{name}
 		WHERE
 		<include refid="id" />
 		= #{id}
@@ -64,23 +64,17 @@
 		SET
 		name = CASE
 		<include refid="id" />
-		<foreach collection="list" item="user">
-			WHEN #{user.id} THEN #{user.name}
-		</foreach>
-		END,
-		age = CASE
-		<include refid="id" />
-		<foreach collection="list" item="user">
-			WHEN #{user.id} THEN #{user.age}
+		<foreach collection="list" item="entity">
+			WHEN #{entity.id} THEN #{entity.name}
 		</foreach>
 		END
 		WHERE id IN
-		<foreach collection="list" item="user" open="(" separator="," close=")">
-			#{user.id}
+		<foreach collection="list" item="entity" open="(" separator="," close=")">
+			#{entity.id}
 		</foreach>
 	</update>
 
-	<select id="findById" resultType="User">
+	<select id="findById" resultType="Role">
 		SELECT * FROM
 		<include refid="entity" />
 		WHERE
@@ -88,7 +82,7 @@
 		= #{id}
 	</select>
 
-	<select id="findAll" resultType="User">
+	<select id="findAll" resultType="Role">
 		SELECT * FROM
 		<include refid="entity" />
 		ORDER BY
@@ -96,7 +90,7 @@
 		DESC
 	</select>
 
-	<select id="findInterval" resultType="User">
+	<select id="findInterval" resultType="Role">
 		SELECT * FROM
 		<include refid="entity" />
 		ORDER BY

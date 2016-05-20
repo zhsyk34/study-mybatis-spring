@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -14,108 +13,104 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.cat.zhsy.dao.UserDao;
-import com.cat.zhsy.entity.User;
+import com.cat.zhsy.dao.RoleDao;
+import com.cat.zhsy.entity.Role;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/spring-dao.xml" })
-public class UserDaoTest {
+public class RoleDaoTest {
 
 	@Resource
-	private UserDao userDao;
+	private RoleDao roleDao;
 
 	@Test
 	public void save() throws Exception {
-		System.out.println(userDao);
-		User user = new User();
-		user.setName("16:31");
-		user.setAge(32);
-		int result = userDao.save(user);
+		Role role = new Role();
+		role.setName("undefine");
+		int result = roleDao.save(role);
 		System.out.println(result);
 	}
 
 	@Test
 	public void saves() {
-		List<User> users = new ArrayList<>();
-		User user;
+		List<Role> roles = new ArrayList<>();
+		Role role;
 		for (int i = 1; i < 5; i++) {
-			user = new User();
-			user.setName("name" + i);
-			user.setAge(new Random().nextInt(100));
-			users.add(user);
+			role = new Role();
+			role.setName("role_name" + i);
+			roles.add(role);
 		}
 
-		int result = userDao.saves(users);
+		int result = roleDao.saves(roles);
 		System.out.println(result);
 	}
 
 	@Test
 	public void update() throws Exception {
-		User user = userDao.findById(3);
-		user.setAge(1111);
-		user.setName("update_one");
-		int result = userDao.update(user);
+		Role role = roleDao.findById(2);
+		role.setName("Super Gamer");
+		int result = roleDao.update(role);
 		System.out.println(result);
 	}
 
 	// TODO
 	@Test
 	public void updates() throws Exception {
-		List<User> userList = new ArrayList<>();
+		List<Role> userList = new ArrayList<>();
 		for (int i = 1; i < 3; i++) {
-			User user = userDao.findById(i);
-			if (user == null) {
+			Role role = roleDao.findById(i);
+			if (role == null) {
 				continue;
 			}
-			user.setName("name" + i);
-			user.setAge(55);
-			userList.add(user);
+			role.setName("name" + i);
+			userList.add(role);
 		}
-		userList.forEach((user) -> System.out.println(user));
+		userList.forEach((role) -> System.out.println(role));
 
 		System.out.println("begin update batch...");
-		int result = userDao.updates(userList);
+		int result = roleDao.updates(userList);
 		System.out.println(result);
 	}
 
 	@Test
 	public void deleteById() throws Exception {
-		int result = userDao.deleteById(2);
+		int result = roleDao.deleteById(7);
 		System.out.println(result);
 	}
 
 	@Test
 	public void deleteByIds() throws Exception {
-		int[] ids = { 3, 5, 6 };
-		int result = userDao.deleteByIds(ids);
+		int[] ids = { 9, 10 };
+		int result = roleDao.deleteByIds(ids);
 		System.out.println(result);
 	}
 
 	@Test
 	public void findById() throws Exception {
-		User user = userDao.findById(1);
-		System.out.println(user);
+		Role role = roleDao.findById(1);
+		System.out.println(role);
 	}
 
 	@Test
 	public void findAll() throws Exception {
-		Collection<User> userList = userDao.findAll();
-		userList.forEach(user -> System.out.println(user));
+		Collection<Role> userList = roleDao.findAll();
+		userList.forEach(role -> System.out.println(role));
 	}
 
 	@Test
 	public void findInterval() throws Exception {
-		Collection<User> userList = userDao.findInterval(0, 3);
-		userList.forEach(user -> System.out.println(user));
+		Collection<Role> userList = roleDao.findInterval(0, 3);
+		userList.forEach(role -> System.out.println(role));
 	}
 
 	// #自动添加引号 $直接输出...
 	@Test
 	public void count() throws Exception {
 		Map<String, Object> map = new HashMap<>();
-		map.put("name like", "%4%");// ..
-		map.put("age > ", 31);
-		int count = userDao.count(map);
+		map.put("name like", "%name%");// ..
+		map.put("id > ", 5);
+		map.put("id < ", "11");
+		int count = roleDao.count(map);
 
 		System.out.println("count: " + count);
 	}

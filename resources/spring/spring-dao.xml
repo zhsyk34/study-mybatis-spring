@@ -5,12 +5,11 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 	<!--1:数据库相关参数,读取配置文件 -->
 	<context:property-placeholder location="classpath*:jdbc.properties" />
-	
+
 	<!--2:数据库连接池配置 -->
-	<!-- <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"> <property name="driverClassName" value="com.mysql.jdbc.Driver" /> <property name="url" value="jdbc:mysql://localhost:3306/zhsy" /> <property name="username" value="root" /> <property name="password" value="root" /> <property name="driverClassName" value="${driver}" /> <property name="url" value="${url}" /> <property name="username" value="${username}" /> <property name="password" value="${password}" /> </bean> -->
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/zhsy" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/mybatis" />
 		<property name="user" value="root" />
 		<property name="password" value="root" />
 		<!-- <property name="driverClass" value="${driver}" /> <property name="jdbcUrl" value="${url}" /> <property name="user" value="${username}" /> <property name="password" value="${password}" /> -->
@@ -20,9 +19,9 @@
 		<!--关闭连接后不自动commit -->
 		<property name="autoCommitOnClose" value="false" />
 		<!--获取连接超时时间 -->
-		<property name="checkoutTimeout" value="10000" />
+		<property name="checkoutTimeout" value="1000" />
 		<!--获取连接失败后的重试次数 -->
-		<property name="acquireRetryAttempts" value="2" />
+		<property name="acquireRetryAttempts" value="1" />
 		<!-- <property name="testConnectionOnCheckin" value="true"/> -->
 	</bean>
 
